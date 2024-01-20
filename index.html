@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Emojis with Emissive Effect</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(to right, #300a4e, #962525); /* Pink gradient */
+    }
+
+    .container {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+      width: 100%;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(22, 21, 21, 0.377);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .birthday-text {
+      font-family: 'Waltograph', cursive;
+      font-size: 30px;
+      font-weight: lighter;
+      color: #00bfff;
+      opacity: 0;
+      animation: breathe 2s infinite alternate;
+      text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 24px;
+      transition: transform 0.2s ease-out;
+      color: pink;
+      /* White color for emojis */
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+
+
+    .emoji-1 {
+      content: '🎂';
+    }
+
+    .emoji-2 {
+      content: '✨';
+    }
+
+    .emoji-3 {
+      content: '💖';
+    }
+
+    #container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes breathe {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.01);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container"></div>
+  <div class="container">
+    <main>
+      <div class="birthday-text" id="birthdayText">
+         On this special day, I want to shower you with all the love and joy you deserve. 🎉 Your presence brings so much warmth and happiness into my life, and I feel incredibly fortunate to celebrate this milestone with you.
+        
+        May your day be filled with laughter, beautiful moments, and the company of those who cherish you just as much as I do. 🎂 As you embark on another year of adventures and accomplishments, may every step be guided by success and fulfillment.
+        
+        You are truly one-of-a-kind, Elexi, and I'm grateful to call you my girlfriend. Here's to another year of creating unforgettable memories together. 🥳 Happy Birthday from me to you! 🎈💖
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const container = document.getElementById('container');
+
+      // Create emojis
+      for (let i = 0; i < 50; i++) {
+        createEmoji();
+      }
+
+      function createEmoji() {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        const emojis = ['🎂', '✨', '💖'];
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.innerHTML = randomEmoji;
+
+        const posX = Math.random() * window.innerWidth;
+        const posY = Math.random() * window.innerHeight;
+
+        emoji.style.transform = `translate(${posX}px, ${posY}px)`;
+
+        container.appendChild(emoji);
+
+        emoji.addEventListener('mouseover', () => {
+          const randomRotation = Math.random() * 360;
+          const randomScale = 1.2;
+
+          emoji.style.transform = `translate(${posX}px, ${posY}px) rotate(${randomRotation}deg) scale(${randomScale})`;
+        });
+
+        emoji.addEventListener('mouseout', () => {
+          emoji.style.transform = `translate(${posX}px, ${posY}px)`;
+        });
+      }
+
+      // Update emojis on window resize
+      window.addEventListener('resize', () => {
+        const emojis = document.querySelectorAll('.emoji');
+        emojis.forEach(emoji => {
+          const posX = Math.random() * window.innerWidth;
+          const posY = Math.random() * window.innerHeight;
+
+          emoji.style.transform = `translate(${posX}px, ${posY}px)`;
+        });
+      });
+
+      function updateEmojis() {
+        const emojis = document.querySelectorAll('.emoji');
+        emojis.forEach(emoji => {
+          const posX = parseFloat(emoji.style.transform.split('(')[1].split('px')[0]);
+          const posY = parseFloat(emoji.style.transform.split(', ')[1].split('px')[0]);
+
+          const randomRotation = Math.random() * 360;
+          const randomScale = 1.2;
+
+          emoji.style.transform = `translate(${posX}px, ${posY}px) rotate(${randomRotation}deg) scale(${randomScale})`;
+        });
+      }
+
+      // Update emojis periodically with increased speed
+      setInterval(updateEmojis, 100);
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const birthdayText = document.getElementById("birthdayText");
+
+      // Initial animation to fade in the text
+      birthdayText.style.opacity = 0;
+      setTimeout(() => {
+        birthdayText.style.transition = "opacity 1s";
+        birthdayText.style.opacity = 1;
+      }, 500);
+    });
+  </script>
+</body>
+
+</html>
